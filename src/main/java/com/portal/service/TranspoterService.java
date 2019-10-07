@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.portal.entity.Deals;
+import com.portal.entity.Query;
 import com.portal.entity.Transporter;
 import com.portal.entity.Vehicle;
 
@@ -36,5 +38,13 @@ public interface TranspoterService {
 	public void rejectRecordOfTransporterVehicle(int vehicleId);
 
 	public void openFile(String openFile, HttpServletResponse response) throws FileNotFoundException, Exception;
+
+	public List<Deals> getDealsofTransporter(int transporterId);
+	
+	public void sendEmail(String to, String subject, String message);
+
+	public List<Query> getCustomerAllQueryList(int transporterId);
+
+	public void saveResponseOfTransporter(int queryId, String transporterResponce);
 	
 }

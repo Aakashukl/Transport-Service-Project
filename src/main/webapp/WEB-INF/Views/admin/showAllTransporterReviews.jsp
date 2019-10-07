@@ -23,15 +23,17 @@
 			<th>Transporter GST Number</th>
 			<th> Rating </th>
 			<th>transporter Delete</th>
+			<th>Deals</th>
 		</tr>
 
 		<c:forEach items="${allTransporterObj}" var="transporterListObj">
 
-			<%-- <c:url var="approveLink" value="approveRecordOfTransporter">
+			
+			<c:url var="deleteLink" value="deleteRecordOfTransporter">
 				<c:param name="transporterId"
 					value="${transporterListObj.transporterId}"></c:param>
-			</c:url> --%>
-			<c:url var="deleteLink" value="deleteRecordOfTransporter">
+			</c:url>
+			<c:url var="dealslink" value="dealsOfTransporter">
 				<c:param name="transporterId"
 					value="${transporterListObj.transporterId}"></c:param>
 			</c:url>
@@ -47,6 +49,7 @@
 				<td>${transporterListObj.transporterGSTNo}</td>
 				<td>${transporterListObj.transporterRating}</td>
 				<td><a href="${deleteLink}">Reject</a></td>
+				<td><a href="${dealslink}">Deals</a></td>
 
 			</tr>
 		</c:forEach>

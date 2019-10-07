@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.portal.entity.Customer;
 import com.portal.entity.Deals;
+import com.portal.entity.Query;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
@@ -34,7 +35,8 @@ public class CustomerDaoImpl implements CustomerDao {
 		session = sessionFactory.openSession();
 
 		Customer customerObject = (Customer) (session
-				.createQuery("from Customer where customerUsername='" + customerObj.getCustomerUsername() + "'").list().get(0));
+				.createQuery("from Customer where customerUsername='" + customerObj.getCustomerUsername() + "'").list()
+				.get(0));
 
 		session.close();
 		return customerObject;
@@ -49,19 +51,33 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	public List<Deals> getAllDealsObj() {
 		session = sessionFactory.openSession();
-		List allDealsListObj= session.createCriteria(Deals.class).list();
+		List allDealsListObj = session.createCriteria(Deals.class).list();
 		session.close();
 		return allDealsListObj;
 	}
 
-	public void persistCustomerObj(Deals dealObj,int customerId) {
-		session =sessionFactory.openSession();
+	public void persistCustomerObj(Deals dealObj, int customerId) {
+		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Customer customerObj = session.get(Customer.class, customerId);
 		customerObj.getDeals().add(dealObj);
 		session.update(customerObj);
 		transaction.commit();
 		session.close();
+	}
+
+	public void saveCustomerQuery(Query queryObj) {
+		session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		session.saveOrUpdate(queryObj);
+		transaction.commit();
+		session.close();
+	}
+
+	public List<Query> getCustomerQueryListById(int customerID) {
+		session = sessionFactory.openSession();
+		List<Query> customerAllQueryList = session.get(Customer.class, customerID).getQuery();
+		return customerAllQueryList;
 	}
 
 }

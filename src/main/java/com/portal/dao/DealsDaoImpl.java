@@ -33,5 +33,14 @@ public class DealsDaoImpl implements DealsDao {
 		return dealsObj;
 	}
 
+	public void dealDeal(int dealId) {
+		session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Deals dealsObj = session.get(Deals.class, dealId);
+		session.delete(dealsObj);
+		transaction.commit();
+		session.close();
+	}
+
 
 }

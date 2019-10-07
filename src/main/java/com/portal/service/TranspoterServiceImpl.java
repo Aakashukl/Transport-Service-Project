@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.portal.dao.TransporterDao;
+import com.portal.entity.Deals;
+import com.portal.entity.Query;
 import com.portal.entity.Transporter;
 import com.portal.entity.Vehicle;
 
@@ -65,6 +67,7 @@ public class TranspoterServiceImpl implements TranspoterService{
 			String hashPassword = hashPasswordConverter(password);
 			transporterObj.setTransporterPassword(hashPassword);
 			transporterObj.setTransporterValidation("0");
+			transporterObj.setTransporterRating(5);
 			transporterDao.saveTransporterObj(transporterObj);
 			
 		} catch (FileNotFoundException e) {
@@ -200,6 +203,25 @@ public class TranspoterServiceImpl implements TranspoterService{
 		fis.read(b);
 		ServletOutputStream sos = response.getOutputStream();
 		sos.write(b);
+		
+	}
+
+	@Override
+	public List<Deals> getDealsofTransporter(int transporterId) {
+		List<Deals> transporterDeals = transporterDao.getDealsofTransporter(transporterId);
+		return transporterDeals;
+	}
+
+	//-----------------Customer ALL Query------------------------
+	@Override
+	public List<Query> getCustomerAllQueryList(int transporterId) {
+		List<Query> listOfAllCustomerQuery = transporterDao.getCustomerAllQueryList(transporterId);
+		return listOfAllCustomerQuery;
+	}
+
+	@Override
+	public void saveResponseOfTransporter(int queryId, String transporterResponce) {
+		transporterDao.saveResponseOfTransporter(queryId,transporterResponce);
 		
 	}
 

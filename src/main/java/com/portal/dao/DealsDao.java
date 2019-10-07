@@ -8,6 +8,8 @@ public interface DealsDao {
 
 	Deals getDealObjById(int dealId);
 
+	void dealDeal(int dealId);
+
 
 
 }

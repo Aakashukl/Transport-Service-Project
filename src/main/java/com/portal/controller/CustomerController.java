@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.portal.entity.Customer;
 import com.portal.entity.Deals;
+import com.portal.entity.Query;
 import com.portal.service.CustomerService;
 import com.portal.service.DealsService;
-import com.portal.service.TranspoterService;
 
 @Controller
 public class CustomerController {
@@ -48,6 +47,33 @@ public class CustomerController {
 		return modelAndView;
 	}
 
+	// ---------------Customer Query Page------------------------------
+
+	@RequestMapping(value = "customerQueryPage")
+	public ModelAndView customerQueryPage(@SessionAttribute("CustomerID") int customerID,
+			@RequestParam("dealId") int dealId) {
+		int transporterId = dealsService.getDealObjById(dealId).getTransporter().getTransporterId();
+		List<Query> customerAllQuery = customerService.getCustomerQueryListById(customerID);
+
+		ModelAndView modelAndView = new ModelAndView("customer/customerQueryPage");
+		Query queryObj = new Query();
+		modelAndView.addObject("queryObj", queryObj);
+		modelAndView.addObject("dealId", dealId);
+		modelAndView.addObject("transporterId", transporterId);
+		modelAndView.addObject("queryListObj", customerAllQuery);
+		return modelAndView;
+	}
+
+	// --------------Save Customer Query in database--------------------
+
+	@RequestMapping(value = "saveCustomerQuery")
+	public String saveCustomerQuery(@SessionAttribute("CustomerID") int customerID,
+			@RequestParam("dealId") int dealId, @RequestParam("transporterId") int transporterId,
+			@ModelAttribute("queryObj") Query queryObj) {
+		customerService.saveCustomerQuery(customerID, transporterId, dealId, queryObj);
+		return "redirect:/customerQueryPage?dealId="+dealId;
+	}
+
 	// ---------------Without Booking Deal --> Redirect to Review Page-----------
 
 	@RequestMapping(value = "BookDeal")
@@ -72,8 +98,8 @@ public class CustomerController {
 	@RequestMapping("saveReviewGivenByCustomer")
 	public String saveReviewGivenByCustomer(@RequestParam("ratingValue") int rating,
 			@SessionAttribute("CustomerID") int customerID, @RequestParam("dealId") int dealId) {
-		System.out.println(customerID +" "+dealId);
-		dealsService.setDealsRating(customerID,dealId,rating);
+		System.out.println(customerID + " " + dealId);
+		dealsService.setDealsRating(customerID, dealId, rating);
 		return "redirect:/HomeCustomer";
 	}
 

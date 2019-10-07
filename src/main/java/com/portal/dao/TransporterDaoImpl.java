@@ -9,6 +9,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.portal.entity.Deals;
+import com.portal.entity.Query;
 import com.portal.entity.Transporter;
 import com.portal.entity.Vehicle;
 
@@ -23,7 +25,7 @@ public class TransporterDaoImpl implements TransporterDao {
 	public void saveTransporterObj(Transporter transporterObj) {
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(transporterObj);
+		session.saveOrUpdate(transporterObj);
 		transaction.commit();
 		session.close();
 
@@ -106,6 +108,31 @@ public class TransporterDaoImpl implements TransporterDao {
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		session.delete(vehicleObj);
+		transaction.commit();
+		session.close();
+	}
+
+	
+	public List<Deals> getDealsofTransporter(int transporterId) {
+		session = sessionFactory.openSession();
+		List<Deals> transporterDeals = session.get(Transporter.class, transporterId).getDeals();
+		return transporterDeals;
+	}
+
+	@Override
+	public List<Query> getCustomerAllQueryList(int transporterId) {
+		session = sessionFactory.openSession();
+		List<Query> listOfAllCustomerQuery = session.get(Transporter.class,transporterId).getQuery();
+		return listOfAllCustomerQuery;
+	}
+
+	@Override
+	public void saveResponseOfTransporter(int queryId, String transporterResponce) {
+		session =sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Query queryObj = session.get(Query.class, queryId);
+		queryObj.setTransporterResponce(transporterResponce);
+		session.update(queryObj);
 		transaction.commit();
 		session.close();
 	}

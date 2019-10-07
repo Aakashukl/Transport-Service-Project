@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.portal.dao.CustomerDao;
 import com.portal.entity.Customer;
 import com.portal.entity.Deals;
+import com.portal.entity.Query;
+import com.portal.entity.Transporter;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -70,6 +72,22 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return dealsListSet;
 	}
+
+	@Override
+	public void saveCustomerQuery(int customerID, int transporterId, int dealId, Query queryObj) {
+		queryObj.setCustomer(new Customer(customerID));
+		queryObj.setDeals(new Deals(dealId));
+		queryObj.setTransporter(new Transporter(transporterId));
+		customerDao.saveCustomerQuery(queryObj);
+	}
+
+	
+	public List<Query> getCustomerQueryListById(int customerID) {
+		List<Query> customerAllQueryList = customerDao.getCustomerQueryListById(customerID);
+		return customerAllQueryList;
+	}
+
+
 	
 	//customerObject.getCustomerPassword().equals(customerObj.getCustomerPassword())
 }

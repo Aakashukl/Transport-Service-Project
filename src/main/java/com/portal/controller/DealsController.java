@@ -70,6 +70,13 @@ public class DealsController {
 		return "redirect:/transporterDealUpdateAndDelete";
 	}
 	
+	//----------------Delete Deal----------------------------------
+	@RequestMapping(value="deleteDeals")
+	public String deleteDeals(@RequestParam("dealId") int dealId) {
+		dealsService.dealDelete(dealId);
+		return "redirect:/transporterDealUpdateAndDelete";
+	}
+	
 	//--------------Update Deals------------------------------
 	
 	@RequestMapping(value="updateDeal")

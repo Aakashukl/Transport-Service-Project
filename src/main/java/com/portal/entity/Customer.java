@@ -1,6 +1,8 @@
 package com.portal.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
@@ -40,6 +43,10 @@ public class Customer {
 	@ManyToMany( fetch = FetchType.EAGER,cascade = CascadeType.PERSIST) 
 	private Set<Deals> Deals = new HashSet<Deals>();
 
+	@OneToMany(mappedBy = "customer")
+	private List<Query> query;
+	
+	
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -66,6 +73,14 @@ public class Customer {
 
 	public String getCutomerEmail() {
 		return cutomerEmail;
+	}
+
+	public List<Query> getQuery() {
+		return query;
+	}
+
+	public void setQuery(List<Query> query) {
+		this.query = query;
 	}
 
 	public void setCutomerEmail(String cutomerEmail) {
@@ -135,6 +150,12 @@ public class Customer {
 
 	public Customer() {
 		super();
+	}
+
+	
+	public Customer(List<Query> query) {
+		super();
+		this.query = query;
 	}
 
 	public Customer(int customerId, String customerName, String customerMobileNumber, String cutomerEmail,

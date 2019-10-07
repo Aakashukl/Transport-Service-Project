@@ -1,6 +1,7 @@
 package com.portal.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,8 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Deals {
@@ -42,6 +46,10 @@ public class Deals {
 	@ManyToMany(mappedBy = "Deals" , fetch = FetchType.EAGER, cascade = CascadeType.PERSIST )
 	private Set<Customer> customer = new HashSet<Customer>();
 
+	@OneToMany(mappedBy = "deals", orphanRemoval = true, cascade = CascadeType.PERSIST)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Query> query;
+	
 	private String dealActivation;
 	private int dealReview;
 	private int numberOfBooking;

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.portal.entity.Deals;
 import com.portal.entity.Transporter;
 import com.portal.entity.Vehicle;
+import com.portal.service.AdminService;
 import com.portal.service.CustomerService;
 import com.portal.service.DealsService;
 import com.portal.service.TranspoterService;
@@ -30,29 +31,44 @@ public class AdminController {
 	@Autowired
 	private CustomerService customerService;
 	
+	@Autowired
+	private AdminService adminService;
+	
 	//--------------show All Transporter with Customer Review-----------
 	@RequestMapping(value="showAllTransporterReviews")
 	public ModelAndView showAllTransporterReviews() {
-		Set<Deals> allDealObj =  customerService.getAllDealsObj();
+		//Set<Deals> allDealObj =  customerService.getAllDealsObj();
 		
 		List<Transporter> allTransporterObj = transpoterService.getListOfALLTransporter();
 		
-		for(Transporter t:allTransporterObj) {
-			int rating = 0;
-			int count = 0;
-			for(Deals d: t.getDeals()) {
-				count++; System.out.println(d.getDealReview()+" Ye Rating hai deals ki");
-				rating =(rating + d.getDealReview())/count;
-				System.out.println("rating obj :"+ rating + " count :" + count);
-			}
-			t.setTransporterRating(rating);
-			System.out.println(t.getTransporterRating()+"AA TOH RHI HAI");
-		}
-		
+		/*
+		 * for(Transporter t:allTransporterObj) { int rating = 0; int count = 0;
+		 * for(Deals d: t.getDeals()) { count++;
+		 * System.out.println(d.getDealReview()+" Ye Rating hai deals ki"); rating
+		 * =(rating + d.getDealReview())/count; System.out.println("rating obj :"+
+		 * rating + " count :" + count); } t.setTransporterRating(rating);
+		 * System.out.println(t.getTransporterRating()+"AA TOH RHI HAI"); }
+		 */
 		ModelAndView modelAndView = new ModelAndView("admin/showAllTransporterReviews");
 		modelAndView.addObject("allTransporterObj", allTransporterObj);
 		return modelAndView;
 	}
+	
+	//---------------Show Transporter ALL Deals-------------------------------
+	@RequestMapping(value="dealsOfTransporter")
+	public ModelAndView dealsOfTransporter(@RequestParam("transporterId") int transporterId) {
+		List<Deals> transporterDeals = transpoterService.getDealsofTransporter(transporterId);
+		ModelAndView modelAndView = new ModelAndView("admin/showTransporterAllDeals");
+		modelAndView.addObject("transporterDealsList", transporterDeals);
+		return modelAndView;
+	}
+
+	//----------------Delete Deal by Admin----------------------------------
+		@RequestMapping(value="deleteDeal")
+		public String deleteDeal(@RequestParam("dealId") int dealId,@RequestParam("transporterId") int transporterId,@RequestParam("reason") String reason) {
+			adminService.dealDelete(dealId,reason);
+			return "redirect:dealsOfTransporter?transporterId="+transporterId;
+		}
 	
 	//--------------Home Admin link--------------------------------
 	

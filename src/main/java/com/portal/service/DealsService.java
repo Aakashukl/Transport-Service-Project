@@ -20,4 +20,6 @@ public interface DealsService {
 
 	void setDealsRating(int customerID, int dealId, int rating);
 
+	void dealDelete(int dealId);
+
 }

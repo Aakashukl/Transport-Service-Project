@@ -13,8 +13,13 @@
 	<h2>Transporter hai ye</h2>
 	<br />
 	<a href=TransporterProfileUpdatePage> Update Profile</a>
+	<br />
 	<a href=TransporterAddVehiclePage> ADD Vehicle</a>
+	<br />
 	<a href=showDealPostPageToTransporter>Post Deal</a>
+	<br />
 	<a href="transporterDealUpdateAndDelete">Deal Update And Delete</a>
+	<br />
+	<a href="customerQueryResponse">Customer Query</a>
 </body>
 </html>

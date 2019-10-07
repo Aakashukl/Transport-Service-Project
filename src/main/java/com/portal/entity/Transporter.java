@@ -42,6 +42,10 @@ public class Transporter {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Vehicle> Vehicle;
 
+	@OneToMany(mappedBy = "transporter", orphanRemoval = true, cascade = CascadeType.PERSIST)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Query> query;
+	
 	public int getTransporterId() {
 		return transporterId;
 	}
@@ -149,6 +153,14 @@ public class Transporter {
 	}
 
 	
+	public List<Query> getQuery() {
+		return query;
+	}
+
+	public void setQuery(List<Query> query) {
+		this.query = query;
+	}
+
 	public Transporter(int transporterId) {
 		super();
 		this.transporterId = transporterId;

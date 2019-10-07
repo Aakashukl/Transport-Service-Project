@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.portal.dao.CustomerDao;
 import com.portal.dao.DealsDao;
-import com.portal.entity.Customer;
+import com.portal.dao.TransporterDao;
 import com.portal.entity.Deals;
 import com.portal.entity.Transporter;
 import com.portal.entity.Vehicle;
@@ -23,6 +23,12 @@ public class DealsServiceImpl implements DealsService {
 
 	@Autowired
 	private CustomerDao customerDao;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private TransporterDao transporterDao;
 
 	public List<Vehicle> getVehicleListByTransporterID(int transporterID) {
 
@@ -43,20 +49,6 @@ public class DealsServiceImpl implements DealsService {
 		return dealsObj;
 	}
 
-	/*
-	 * public List<Deals> getDealListByVehicleIDList(int transporterID) {
-	 * List<Deals> allDealListobj = new ArrayList<>();
-	 * 
-	 * List<Vehicle> vehicleListObj =
-	 * transpoterService.getTransporterObjByID(transporterID).getVehicle();
-	 * 
-	 * //List<Vehicle> dealsObjs = new ArrayList<Vehicle>(); for (Vehicle
-	 * vehicleObjs : vehicleListObj) { List<Deals> d =
-	 * vehicleObjs.getTransporterDeals(); for(Deals deal:d) {
-	 * allDealListobj.add(deal); } }
-	 * 
-	 * return allDealListobj; }
-	 */
 	public List<Deals> getDealListByVehicleIDList(int transporterID) {
 
 		List<Deals> dealsListObj = transpoterService.getTransporterObjByID(transporterID).getDeals();
@@ -79,18 +71,42 @@ public class DealsServiceImpl implements DealsService {
 		Deals dealObj = dealsDao.getDealObjById(dealId);
 		return dealObj;
 	}
-
+//--------------------------Deal Delete---------------------------
+	@Override
+	public void dealDelete(int dealId) {
+		dealsDao.dealDeal(dealId);
+	}
+	
 //--------------------------- Setting deals--------------------------------
 	public void setDealsRating(int customerID, int dealId, int rating) {
 		Deals dealObj = dealsDao.getDealObjById(dealId);
 		int current_rating = dealObj.getDealReview();
-		int numberOfBooking = dealObj.getNumberOfBooking() + 1;
-		int newRating = (current_rating + rating)/numberOfBooking;
-		dealObj.setDealReview(newRating);
-		dealObj.setNumberOfBooking(numberOfBooking);
-		customerDao.persistCustomerObj(dealObj,customerID);
+		int numberOfBooking = dealObj.getNumberOfBooking();
+		if (numberOfBooking == 0) {
+			dealObj.setDealReview(rating);
+		} else {
+			int newRating = (current_rating * numberOfBooking + rating) / (numberOfBooking + 1);
+			dealObj.setDealReview(newRating);
+		}
+		dealObj.setNumberOfBooking(numberOfBooking + 1);
+		customerDao.persistCustomerObj(dealObj, customerID);
 		dealsDao.saveDeal(dealObj);
 		System.out.println("Ho gya");
+		// -----Calling Function For Updating Transporter Review Table--------------
+		updateReviewColumnOfTransporter(dealObj);
+	}
+//---------------Updating Transporter Rating Column in Transporter Table--------------
 
+	public void updateReviewColumnOfTransporter(Deals dealObj) {
+		int transporterId = dealObj.getTransporter().getTransporterId();
+		Transporter transporterObj = transpoterService.getTransporterObjByID(transporterId);
+		int singleTransHasDeals = transporterObj.getDeals().size();
+		int totalDealsRating = transporterObj.getDeals().stream()
+				.mapToInt(o -> o.getDealReview())
+				.sum()/ singleTransHasDeals;
+		transporterObj.setTransporterRating(totalDealsRating);
+		transporterDao.saveTransporterObj(transporterObj);
+
+		System.out.println(totalDealsRating);
 	}
 }

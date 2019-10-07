@@ -2,6 +2,8 @@ package com.portal.dao;
 
 import java.util.List;
 
+import com.portal.entity.Deals;
+import com.portal.entity.Query;
 import com.portal.entity.Transporter;
 import com.portal.entity.Vehicle;
 
@@ -28,4 +30,10 @@ public interface TransporterDao {
 	public void updateVehicleRecord(Vehicle vehicleObj);
 
 	public void deleteVehicleRecord(Vehicle vehicleObj);
+
+	public List<Deals> getDealsofTransporter(int transporterId);
+
+	public List<Query> getCustomerAllQueryList(int transporterId);
+
+	public void saveResponseOfTransporter(int queryId, String transporterResponce);
 }

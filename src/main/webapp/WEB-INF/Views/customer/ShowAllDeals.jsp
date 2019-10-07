@@ -21,6 +21,7 @@
 			<th>startPointTime</th>
 			<th>endPointTime</th>
 			<th>dealPrice</th>
+			<th>Query</th>
 			<th>Book</th>
 
 		</tr>
@@ -29,6 +30,9 @@
 
 			
 			<c:url var="BookDealAndGRate" value="BookDeal">
+				<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
+			</c:url>
+			<c:url var="query" value="customerQueryPage">
 				<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
 			</c:url>
 			<tr>
@@ -40,9 +44,13 @@
 				<td>${alldealObjVar.endPointTime}</td>
 				<td>${alldealObjVar.dealPrice}</td>
 				<td>
+					<a href="${query}">Ask</a>
+				</td>
+				<td>
 				<a href="${BookDealAndGRate}">Book</a>
 				</td>
 			</tr>
+
 		</c:forEach>
 
 	</table>
