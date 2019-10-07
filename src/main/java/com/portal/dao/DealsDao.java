@@ -1,6 +1,9 @@
 package com.portal.dao;
 
+import java.util.List;
+
 import com.portal.entity.Deals;
+import com.portal.entity.Vehicle;
 
 public interface DealsDao {
 
@@ -9,6 +12,8 @@ public interface DealsDao {
 	Deals getDealObjById(int dealId);
 
 	void dealDeal(int dealId);
+
+	List<Vehicle> getApprovedDealsByTransporterId(int transporterID);
 
 
 

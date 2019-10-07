@@ -172,6 +172,8 @@ public class Transporter {
 		Vehicle = vehicle;
 	}
 
+
+
 	public Transporter() {
 		super();
 	}

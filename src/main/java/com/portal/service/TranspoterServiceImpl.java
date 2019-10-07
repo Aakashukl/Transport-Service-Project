@@ -31,7 +31,7 @@ public class TranspoterServiceImpl implements TranspoterService{
 	@Autowired
 	JavaMailSender mailSender;
 	
-	// Sending Mail Code-----------------------------------------
+	//------------Sending Mail Code---------------
 	
 	public void sendEmail(String to, String subject, String message) {
 		SimpleMailMessage mailMessage=new SimpleMailMessage();
@@ -77,16 +77,17 @@ public class TranspoterServiceImpl implements TranspoterService{
 		
 	}
 
-	// Get Transporter all Data 
+	//----------- Get Transporter all Data ----------------------
 	
 	public Transporter getTransporterObj(Transporter transporterObj) {
 		Transporter transporterObject = transporterDao.getTransporterObj(transporterObj);
 		return transporterObject;
 	}
 
+	//----------------Login--------------------------------------------
 	public Transporter login(Transporter transporterObj) {
 		Transporter transporterObject = getTransporterObj(transporterObj);
-		if(transporterObject != null && hashPasswordCheck(transporterObj.getTransporterPassword(), transporterObject.getTransporterPassword())) {
+		if(transporterObject != null && transporterObject.getTransporterValidation().equals("1") && hashPasswordCheck(transporterObj.getTransporterPassword(), transporterObject.getTransporterPassword())) {
 			return transporterObject;
 		}
 		return transporterObj;
@@ -94,7 +95,7 @@ public class TranspoterServiceImpl implements TranspoterService{
 	//hashPasswordConverter(transporterObj.getTransporterPassword()).equals(transporterObject.getTransporterPassword())
 
 	
-	// For Vehicle Data -------------------------------------------------------------------------------------------
+	//-----------------Save Vehicle Data --------------------------
 	public void saveVehicleObj(Vehicle vehicleObj, MultipartFile RegistrationCertificate, MultipartFile InsurancePaper,
 			MultipartFile FitnessCertificate, MultipartFile DriverDrivingLicence,int transporterID) throws Exception {
 		

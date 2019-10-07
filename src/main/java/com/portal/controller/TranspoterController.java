@@ -25,12 +25,13 @@ public class TranspoterController {
 
 	@Autowired
 	private CustomerService customerService;
-
+	
+	//--------------Transporter Home Page-------------------------------
 	@RequestMapping("HomeTransporter")
 	public String homeTransporter() {
 		return "HomeTransporter";
 	}
-
+	//---------------------Show New Transporter Form----------------------
 	@RequestMapping("showNewTranspoterForm")
 	public ModelAndView showNewCutomerForm() {
 		ModelAndView modelAndView = new ModelAndView("TranspoterEntry");
@@ -39,7 +40,7 @@ public class TranspoterController {
 		return modelAndView;
 	}
 
-	// -----------------customer Query Response------------------------
+	// -----------------Customer Query Response------------------------
 	@RequestMapping(value = "customerQueryResponse")
 	public ModelAndView customerQueryResponse(@SessionAttribute("TransporterID") int transporterID) {
 		List<Query> listOfAllCustomerQuery = transportService.getCustomerAllQueryList(transporterID);
@@ -48,7 +49,7 @@ public class TranspoterController {
 		return modelAndView;
 	}
 
-	// ----------------saving Transporter Response-------------
+	// ----------------Saving Transporter Response-------------
 	@RequestMapping(value = "saveTransporterResponse")
 	public String saveTransporterResponse(@RequestParam("queryId") int queryId,
 			@RequestParam("transporterResponce") String transporterResponce,
@@ -56,7 +57,7 @@ public class TranspoterController {
 		transportService.saveResponseOfTransporter(queryId,transporterResponce);
 		return "redirect:/customerQueryResponse";
 	}
-
+	// ----------------Save Transport Process-------------------
 	@RequestMapping(value = "saveTranspoterProcess", method = RequestMethod.POST)
 	public ModelAndView saveTransportProcess(@RequestParam("PANPath") MultipartFile PanCard,
 			@ModelAttribute("transporterObj") Transporter transporter) throws Exception {
@@ -69,7 +70,7 @@ public class TranspoterController {
 		return modelAndView;
 
 	}
-
+	// --------------------Transporter Profile Update Page-----------------
 	@RequestMapping(value = "TransporterProfileUpdatePage")
 	public String transporterProfileUpdatePage() {
 		ModelAndView modelAndView = new ModelAndView("TransporterProfileUpdatePage");

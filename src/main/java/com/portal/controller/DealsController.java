@@ -1,7 +1,15 @@
 package com.portal.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,13 +27,16 @@ public class DealsController {
 
 	@Autowired
 	private DealsService dealsService;
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	private Session session;
 
 	@RequestMapping("showDealPostPageToTransporter")
 	public ModelAndView showDealPostPageToTransporter(@SessionAttribute("TransporterID") int transporterID) {
 		ModelAndView modelAndView = new ModelAndView("showDealPostPageToTransporter");
-
-		//List<Integer> vehicleID = (List<Integer>) dealsService.getVehicleListByTransporterID(transporterID);
-		List<Vehicle> vehicleID = (List<Vehicle>) dealsService.getVehicleListByTransporterID(transporterID);
+		//List<Vehicle> vehicleID = (List<Vehicle>) dealsService.getVehicleListByTransporterID(transporterID);
+		List<Vehicle> vehicleID = dealsService.getApprovedDealsByTransporterId(transporterID);
 		Deals dealsObj = new Deals();
 		modelAndView.addObject("vehicleID", vehicleID);
 		modelAndView.addObject("dealsObj", dealsObj);
@@ -89,10 +100,19 @@ public class DealsController {
 		return modelAndView;
 	}
 	
+	//-----------------Deals Filter------------------------
 	
-	
-	
-	
+	@RequestMapping(value = "dealsFilter")
+	public ModelAndView dealsFilter(@RequestParam("onDate") String onDate,@RequestParam("toDate") String toDate) throws ParseException {
+		session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(Deals.class);
+		System.out.println(onDate);System.out.println(toDate);
+		criteria.add(Restrictions.lt("DATE(startPointDate)", ));
+		//criteria.add(Restrictions.sqlRestriction( "STR_TO_DATE('date1', '%d-%m-%Y')"));startPointDate
+
+		System.out.println(criteria.list());
+		return null;
+	}
 	
 	
 }

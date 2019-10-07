@@ -3,6 +3,7 @@ package com.portal.service;
 import java.util.List;
 
 import com.portal.entity.Deals;
+import com.portal.entity.Vehicle;
 
 public interface DealsService {
 
@@ -21,5 +22,7 @@ public interface DealsService {
 	void setDealsRating(int customerID, int dealId, int rating);
 
 	void dealDelete(int dealId);
+
+	List<Vehicle> getApprovedDealsByTransporterId(int transporterID);
 
 }

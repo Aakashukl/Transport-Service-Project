@@ -31,16 +31,16 @@ public class DealsServiceImpl implements DealsService {
 	private TransporterDao transporterDao;
 
 	public List<Vehicle> getVehicleListByTransporterID(int transporterID) {
-
 		List<Vehicle> vehicleListObj = transpoterService.getTransporterObjByID(transporterID).getVehicle();
-		/*
-		 * List<Integer> vehicleIDs = new ArrayList<Integer>(); for (Vehicle veh :
-		 * vehicleListObj) { vehicleIDs.add(veh.getVehicleId()); }
-		 */
-
+		//List<Vehicle> vehicleListObj = dealsDao.getApprovedDealsByTransporterId
 		return vehicleListObj;
 	}
 
+	public List<Vehicle> getApprovedDealsByTransporterId(int transporterID) {
+		List<Vehicle> approvedVehicleList = dealsDao.getApprovedDealsByTransporterId(transporterID);
+		return approvedVehicleList;
+	}
+	
 	public Deals saveDeal(Deals deals, int vehicleIdd, int transporterid) {
 		deals.setVehicle(new Vehicle(vehicleIdd));
 		deals.setTransporter(new Transporter(transporterid));
