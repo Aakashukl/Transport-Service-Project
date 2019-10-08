@@ -207,20 +207,20 @@ public class TranspoterServiceImpl implements TranspoterService{
 		
 	}
 
-	@Override
+
 	public List<Deals> getDealsofTransporter(int transporterId) {
 		List<Deals> transporterDeals = transporterDao.getDealsofTransporter(transporterId);
 		return transporterDeals;
 	}
 
 	//-----------------Customer ALL Query------------------------
-	@Override
+
 	public List<Query> getCustomerAllQueryList(int transporterId) {
 		List<Query> listOfAllCustomerQuery = transporterDao.getCustomerAllQueryList(transporterId);
 		return listOfAllCustomerQuery;
 	}
 
-	@Override
+
 	public void saveResponseOfTransporter(int queryId, String transporterResponce) {
 		transporterDao.saveResponseOfTransporter(queryId,transporterResponce);
 		

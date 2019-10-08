@@ -1,7 +1,7 @@
 package com.portal.dao;
 
+import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 import com.portal.entity.Customer;
 import com.portal.entity.Deals;
@@ -23,4 +23,14 @@ public interface CustomerDao {
 	public void saveCustomerQuery(Query queryObj);
 
 	public List<Query> getCustomerQueryListById(int customerID);
+
+	public List<Deals> getAllDealsObj(String fromCity,String toCity, Date fromDate,Date toDate);
+	
+	public List<Deals> getAllDealsObj(String fromCity,String toCity);
+	
+	public List<Deals> getAllDealsObj(Date fromDate,Date toDate);
+	
+	public List<Deals> getAllDealsObj(Date fromDate);
+	
+	public List<Deals> getAllDealsObj(String fromCity);
 }

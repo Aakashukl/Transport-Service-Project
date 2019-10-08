@@ -12,6 +12,29 @@
 	<br />
 	<h1>List of Transporter Vehicle Request</h1>
 
+	<form action="dealsFilter">
+		<select name="filter">
+			<option value="dealsFilterCity">dealsFilterCity</option>
+			<option value="dealsFilterDate">dealsFilterDate</option>
+			<option value="alldealsFilter">alldealsFilter</option>
+		</select> <input type="submit" value="Submit">
+	</form>
+
+
+
+	<frm:form action="alldealsFilter">
+		<label>From</label>
+		<input type="text" name="fromCity" value="null" />
+		<label>To</label>
+		<input type="text" name="toCity" value="null" />
+		<label>From Date</label>
+		<input type="date" name="fromDate" value="0001-01-01" />
+
+		<label>To Date</label>
+		<input type="date" name="toDate" value="0001-01-01" />
+		<input type="submit" value="Show"/>
+	</frm:form>
+
 	<table border="1">
 		<tr>
 			<th>startPointCityName</th>
@@ -28,7 +51,7 @@
 
 		<c:forEach items="${dealsListObj}" var="alldealObjVar">
 
-			
+
 			<c:url var="BookDealAndGRate" value="BookDeal">
 				<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
 			</c:url>
@@ -43,16 +66,13 @@
 				<td>${alldealObjVar.startPointTime}</td>
 				<td>${alldealObjVar.endPointTime}</td>
 				<td>${alldealObjVar.dealPrice}</td>
-				<td>
-					<a href="${query}">Ask</a>
-				</td>
-				<td>
-				<a href="${BookDealAndGRate}">Book</a>
-				</td>
+				<td><a href="${query}">Ask</a></td>
+				<td><a href="${BookDealAndGRate}">Book</a></td>
 			</tr>
 
 		</c:forEach>
 
 	</table>
+
 </body>
 </html>

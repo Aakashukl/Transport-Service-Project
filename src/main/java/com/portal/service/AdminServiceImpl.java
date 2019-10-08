@@ -26,7 +26,7 @@ public class AdminServiceImpl implements AdminService {
 			return false;
 	}
 
-	@Override
+
 	public void dealDelete(int dealId, String reason) {
 		Transporter transporterObj = dealsService.getDealObjById(dealId).getTransporter();
 		dealsService.dealDelete(dealId);

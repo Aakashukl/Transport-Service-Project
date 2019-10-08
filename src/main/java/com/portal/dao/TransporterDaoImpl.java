@@ -119,14 +119,13 @@ public class TransporterDaoImpl implements TransporterDao {
 		return transporterDeals;
 	}
 
-	@Override
+
 	public List<Query> getCustomerAllQueryList(int transporterId) {
 		session = sessionFactory.openSession();
 		List<Query> listOfAllCustomerQuery = session.get(Transporter.class,transporterId).getQuery();
 		return listOfAllCustomerQuery;
 	}
 
-	@Override
 	public void saveResponseOfTransporter(int queryId, String transporterResponce) {
 		session =sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();

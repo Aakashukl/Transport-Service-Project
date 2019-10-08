@@ -14,26 +14,22 @@
 
 	<form action="dealsFilter">
 		<select name="filter">
-			<option value="dealsFilterCity">dealsFilterDate</option>
+			<option value="dealsFilterCity">dealsFilterCity</option>
 			<option value="dealsFilterDate">dealsFilterDate</option>
 			<option value="alldealsFilter">alldealsFilter</option>
 		</select> <input type="submit" value="Submit">
 	</form>
 
 
-	<%-- 	<frm:form action="dealsFilter">
-		<label>From</label>
-		<input type="text" name="fromCity" value="null" />
-		<label>To</label>
-		<input type="text" name="toCity" value="null" />
+
+	<frm:form action="alldealsFilter">
 		<label>From Date</label>
 		<input type="date" name="fromDate" value="0001-01-01" />
 
 		<label>To Date</label>
-		<input type="date" name="toDate" value="0001-01-01" />
-		<input type="submit" value="Show"/>
-	</frm:form> --%>
-
+		<input type="date" name="toDate" />
+		<input type="submit" value="Show"value="0001-01-01" />
+	</frm:form>
 
 	<table border="1">
 		<tr>
