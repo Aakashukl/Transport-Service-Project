@@ -46,5 +46,11 @@ public interface TranspoterService {
 	public List<Query> getCustomerAllQueryList(int transporterId);
 
 	public void saveResponseOfTransporter(int queryId, String transporterResponce);
+
+	public List<Vehicle> getVehicleListByTransporterId(int transporterID);
+
+	public Vehicle getVehicleById(int vehicleId);
+
+	
 	
 }

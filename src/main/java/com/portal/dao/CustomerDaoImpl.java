@@ -1,6 +1,7 @@
 package com.portal.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -173,6 +174,17 @@ public class CustomerDaoImpl implements CustomerDao {
 		session = sessionFactory.openSession();
 		List<Query> customerAllQueryList = session.get(Customer.class, customerID).getQuery();
 		return customerAllQueryList;
+	}
+
+	@Override
+	public List<String> getAllCustomerEmail() {
+		session = sessionFactory.openSession();
+		List<Customer> allCustomer = session.createCriteria(Customer.class).list();
+		List<String> allCustomerEmail = new ArrayList<String>();
+		for(Customer c:allCustomer) {
+			allCustomerEmail.add(c.getCutomerEmail());
+		}
+		return allCustomerEmail;
 	}
 
 }

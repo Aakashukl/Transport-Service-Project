@@ -1,8 +1,9 @@
 package com.portal.controller;
 
+import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,103 +25,170 @@ public class AdminController {
 
 	@Autowired
 	private TranspoterService transpoterService;
-	
+
 	@Autowired
 	private DealsService dealsService;
-	
+
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private AdminService adminService;
-	
-	//--------------show All Transporter with Customer Review-----------
-	@RequestMapping(value="showAllTransporterReviews")
-	public ModelAndView showAllTransporterReviews() {
-		//Set<Deals> allDealObj =  customerService.getAllDealsObj();
-		
-		List<Transporter> allTransporterObj = transpoterService.getListOfALLTransporter();
-		
-		/*
-		 * for(Transporter t:allTransporterObj) { int rating = 0; int count = 0;
-		 * for(Deals d: t.getDeals()) { count++;
-		 * System.out.println(d.getDealReview()+" Ye Rating hai deals ki"); rating
-		 * =(rating + d.getDealReview())/count; System.out.println("rating obj :"+
-		 * rating + " count :" + count); } t.setTransporterRating(rating);
-		 * System.out.println(t.getTransporterRating()+"AA TOH RHI HAI"); }
-		 */
-		ModelAndView modelAndView = new ModelAndView("admin/showAllTransporterReviews");
-		modelAndView.addObject("allTransporterObj", allTransporterObj);
-		return modelAndView;
-	}
-	
-	//---------------Show Transporter ALL Deals-------------------------------
-	@RequestMapping(value="dealsOfTransporter")
-	public ModelAndView dealsOfTransporter(@RequestParam("transporterId") int transporterId) {
-		List<Deals> transporterDeals = transpoterService.getDealsofTransporter(transporterId);
-		ModelAndView modelAndView = new ModelAndView("admin/showTransporterAllDeals");
-		modelAndView.addObject("transporterDealsList", transporterDeals);
-		return modelAndView;
+
+	// --------------show All Transporter with Customer Review-----------
+	@RequestMapping(value = "showAllTransporterReviews")
+	public ModelAndView showAllTransporterReviews(HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			List<Transporter> allTransporterObj = transpoterService.getListOfALLTransporter();
+			ModelAndView modelAndView = new ModelAndView("admin/showAllTransporterReviews");
+			modelAndView.addObject("allTransporterObj", allTransporterObj);
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+			return modelAndView;
+		}
 	}
 
-	//----------------Delete Deal by Admin----------------------------------
-		@RequestMapping(value="deleteDeal")
-		public String deleteDeal(@RequestParam("dealId") int dealId,@RequestParam("transporterId") int transporterId,@RequestParam("reason") String reason) {
-			adminService.dealDelete(dealId,reason);
-			return "redirect:dealsOfTransporter?transporterId="+transporterId;
+	// ---------------Show Transporter ALL Deals-------------------------------
+	@RequestMapping(value = "dealsOfTransporter")
+	public ModelAndView dealsOfTransporter(@RequestParam("transporterId") int transporterId,
+			HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			List<Deals> transporterDeals = transpoterService.getDealsofTransporter(transporterId);
+			ModelAndView modelAndView = new ModelAndView("admin/showTransporterAllDeals");
+			modelAndView.addObject("transporterDealsList", transporterDeals);
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+			return modelAndView;
 		}
-	
-	//--------------Home Admin link--------------------------------
-	
-		@RequestMapping(value = "HomeAdmin")
-		public String homeAdmin() { 
-			return "HomeAdmin";
-		} 
-	//---------------------------------------------------------------------------------
-	@RequestMapping(value = "transporterRequestCheck")
-	public ModelAndView transporterRequestCheck() {
-		ModelAndView modelAndView = new ModelAndView("showAllTransporterRequest");
-		List<Transporter> transporterListObj = transpoterService.getListOfALLTransporter();
-		modelAndView.addObject("transporterListObj", transporterListObj);
-		return modelAndView;
 	}
+
+	// ----------------Delete Deal by Admin----------------------------------
+	@RequestMapping(value = "deleteDeal")
+	public String deleteDeal(@RequestParam("dealId") int dealId, @RequestParam("transporterId") int transporterId,
+			@RequestParam("reason") String reason, HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			adminService.dealDelete(dealId, reason);
+			return "redirect:dealsOfTransporter?transporterId=" + transporterId;
+		} else {
+
+			return "others/LogoutPage";
+		}
+	}
+
+	// --------------Home Admin link--------------------------------
+
+	@RequestMapping(value = "HomeAdmin")
+	public ModelAndView homeAdmin(HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			ModelAndView modelAndView = new ModelAndView("admin/HomeAdmin");
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+			return modelAndView;
+		}
+	}
+
+	// ------------------Transporter Request Check-----------------
+
+	@RequestMapping(value = "transporterRequestCheck")
+	public ModelAndView transporterRequestCheck(HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			ModelAndView modelAndView = new ModelAndView("admin/showAllTransporterRequest");
+			List<Transporter> transporterListObj = transpoterService.getListOfALLTransporter();
+			modelAndView.addObject("transporterListObj", transporterListObj);
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+			return modelAndView;
+		}
+
+	}
+
+	// ----------------transporter Vehicle RequestCheck-------------
 
 	@RequestMapping(value = "transporterVehicleRequestCheck")
-	public ModelAndView transporterVehicleRequestCheck() {
-		ModelAndView modelAndView = new ModelAndView("showAllTransporterVehicleRequest");
-		List<Vehicle> vehicleListObj = transpoterService.getListOfALLVehicle();
-		modelAndView.addObject("vehicleListObj", vehicleListObj);
-		return modelAndView;
+	public ModelAndView transporterVehicleRequestCheck(HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			ModelAndView modelAndView = new ModelAndView("admin/showAllTransporterVehicleRequest");
+			List<Vehicle> vehicleListObj = transpoterService.getListOfALLVehicle();
+			modelAndView.addObject("vehicleListObj", vehicleListObj);
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+			return modelAndView;
+		}
 	}
+
+	// -------------------------Open Uploaded Files----------------------
 
 	@RequestMapping(value = "openFile")
-	public void openFile(@RequestParam("open") String openFile, HttpServletResponse response) throws Exception {
-		transpoterService.openFile(openFile,response);
-	
+	public void openFile(@RequestParam("open") String openFile, HttpServletResponse response,
+			HttpServletRequest request) throws FileNotFoundException, Exception {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			transpoterService.openFile(openFile, response);
+		} else
+			response.sendRedirect("others/LogoutPage.jsp");
+
 	}
 
+	// -----------------Approve Record Of Transporter--------------------------
 	@RequestMapping(value = "approveRecordOfTransporter")
-	public String approveRecordOfTransporter(@RequestParam("transporterId") int transporterId) {
-		transpoterService.approveRecordOfTransporter(transporterId);
-		return "redirect:/transporterRequestCheck";
+	public String approveRecordOfTransporter(@RequestParam("transporterId") int transporterId,
+			HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			transpoterService.approveRecordOfTransporter(transporterId);
+			return "redirect:/transporterRequestCheck";
+		} else {
+			return "redirect:/HomeAdmin";
+		}
 	}
-	
+
+	// -----------------Approve Record Of Transporter Vehicle---------------
 	@RequestMapping(value = "approveRecordOfTransporterVehicle")
-	public String approveRecordOfTransporterVehicle(@RequestParam("vehicleId") int vehicleId) {
-		System.out.println("Ye wali vehicle ID Approve hoge: "+vehicleId);
-		transpoterService.approveRecordOfTransporterVehicle(vehicleId);
-		return "redirect:/transporterVehicleRequestCheck";
+	public String approveRecordOfTransporterVehicle(@RequestParam("vehicleId") int vehicleId,
+			HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			System.out.println("Ye wali vehicle ID Approve hoge: " + vehicleId);
+			transpoterService.approveRecordOfTransporterVehicle(vehicleId);
+			return "redirect:/transporterVehicleRequestCheck";
+		} else {
+			return "redirect:/HomeAdmin";
+		}
 	}
-	
+
+	// -----------------Delete Record Of Transporter----------------------
+
 	@RequestMapping(value = "deleteRecordOfTransporter")
-	public String deleteRecordOfTransporter(@RequestParam("transporterId") int transporterId) {
-		transpoterService.rejectRecordOfTransporter(transporterId);
-		return "redirect:/transporterRequestCheck";
+	public String deleteRecordOfTransporter(@RequestParam("transporterId") int transporterId,
+			HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			transpoterService.rejectRecordOfTransporter(transporterId);
+			return "redirect:/transporterRequestCheck";
+		} else {
+			return "redirect:/HomeAdmin";
+		}
 	}
-	
-	@RequestMapping(value ="deleteRecordOfTransporterVehicle")
-	public String deleteRecordOfTransporterVehicle(@RequestParam("vehicleId") int vehicleId) {
-		transpoterService.rejectRecordOfTransporterVehicle(vehicleId);
-		return "redirect:/transporterVehicleRequestCheck";
+
+	// -------------------Delete Record Of Transporter Vehicle---------------
+	@RequestMapping(value = "deleteRecordOfTransporterVehicle")
+	public String deleteRecordOfTransporterVehicle(@RequestParam("vehicleId") int vehicleId,
+			HttpServletRequest request) {
+		if (request.getSession().getAttribute("AdminUsername") != null) {
+			transpoterService.rejectRecordOfTransporterVehicle(vehicleId);
+			return "redirect:/transporterVehicleRequestCheck";
+		} else {
+			return "redirect:/HomeAdmin";
+		}
 	}
+
+	/*
+	 * //-----------------show Registration Page--------------
+	 */
+	@RequestMapping("showRegistrationPage")
+	public String showRegistrationPage() {
+		return "others/RegistrationPage";
+	}
+
 }

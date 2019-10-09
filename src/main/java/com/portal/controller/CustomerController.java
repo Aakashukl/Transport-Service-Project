@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,6 @@ public class CustomerController {
 
 	@Autowired
 	private DealsService dealsService;
-
 
 	// -----------Show Customer Home Page----------------------------------
 
@@ -241,14 +241,20 @@ public class CustomerController {
 	public String saveReviewGivenByCustomer(@RequestParam("ratingValue") int rating,
 			@SessionAttribute("CustomerID") int customerID, @RequestParam("dealId") int dealId,
 			HttpServletRequest request) {
-		if (request.getSession().getAttribute("CustomerID") != null) {
-			System.out.println(customerID + " " + dealId);
-			dealsService.setDealsRating(customerID, dealId, rating);
-			return "redirect:/HomeCustomer";
-		} else
-			return "others/LogoutPage";
+		try {
+			if (request.getSession().getAttribute("CustomerID") != null) {
+				System.out.println(customerID + " " + dealId);
+				dealsService.setDealsRating(customerID, dealId, rating);
+				return "redirect:/HomeCustomer";
+			} else
+				return "others/LogoutPage";
+		} catch (javax.persistence.PersistenceException e) {
+			System.out.println(e);
+			return "others/alreadyReviewedException";
+		}
 	}
 
+	// --------------------------------------------------------------
 	/*
 	 * @RequestMapping("saveCustomerProcess") public ModelAndView
 	 * saveCustomerProcess(@Valid @ModelAttribute("customerObj") Customer customer,
@@ -258,19 +264,46 @@ public class CustomerController {
 	 * ModelAndView("CustomerEntry"); modelAndView.addObject("customerObj",
 	 * customer); return modelAndView; } }
 	 */
-
+//------------------Save New Customer Process----------------
 	@RequestMapping("saveCustomerProcess")
-	public ModelAndView saveCustomerProcess(@ModelAttribute("customerObj") Customer customer) {
-		customerService.saveCustomerObj(customer);
-		ModelAndView modelAndView = new ModelAndView("LoginPage");
-		// modelAndView.addObject("customerObj", customer);
-		return modelAndView;
+	public ModelAndView saveCustomerProcess(@Valid @ModelAttribute("customerObj") Customer customer,
+			BindingResult result) {
+		try {
+			if (result.hasErrors()) {
+				ModelAndView mv = new ModelAndView("customer/CustomerEntry");
+				return mv;
+			}
+			customerService.saveCustomerObj(customer);
+			ModelAndView modelAndView = new ModelAndView("others/LoginPage");
+			// modelAndView.addObject("customerObj", customer);
+			return modelAndView;
+		} catch (javax.persistence.PersistenceException e) {
+			ModelAndView modelAndView = new ModelAndView("customer/CustomerEntry");
+			return modelAndView;
+		}
+	}
+
+	// ---------------update Customer Process-----------------------
+
+	@RequestMapping("updateCustomerProcess")
+	public ModelAndView updateCustomerProcess(@ModelAttribute("customerObj") Customer customer) {
+		try {
+			customerService.saveCustomerObj(customer);
+			ModelAndView modelAndView = new ModelAndView("customer/HomeCustomer");
+			// modelAndView.addObject("customerObj", customer);
+			return modelAndView;
+		} catch (javax.persistence.PersistenceException e) {
+			System.out.println(e);
+			ModelAndView modelAndView = new ModelAndView("others/customerUniqueValueException");
+			return modelAndView;
+		}
 	}
 
 	// ----------------------Update Customer Profile--------------------------
 
 	@RequestMapping(value = "CustomerUpdateProfilePage")
 	public ModelAndView customerUpdateProfilePage(@SessionAttribute("CustomerID") int cid, HttpServletRequest request) {
+
 		if (request.getSession().getAttribute("CustomerID") != null) {
 			Customer customerObj = customerService.getCustomerObjById(cid);
 			ModelAndView modelAndView = new ModelAndView("customer/CustomerUpdateProfilePage");
@@ -279,16 +312,18 @@ public class CustomerController {
 		} else {
 			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
 			return modelAndView;
+
 		}
 
 	}
 
-	/*
-	 * @ExceptionHandler(value = javax.persistence.PersistenceException.class)
-	 * 
-	 * public String handleException(javax.persistence.PersistenceException e) {
-	 * System.out.println("Unkown Exception Occured: " + e); return
-	 * "others/CustomerException"; }
-	 */
+//-----------------------Handling Exception-----------------------
+
+	@ExceptionHandler(value = Exception.class)
+	public ModelAndView handleException(Exception e) {
+		System.out.println("Unkown Exception Occured: " + e);
+		ModelAndView modelAndView = new ModelAndView("others/CustomerException");
+		return modelAndView;
+	}
 
 }

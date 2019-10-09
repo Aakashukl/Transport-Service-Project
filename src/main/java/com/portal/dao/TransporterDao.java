@@ -36,4 +36,6 @@ public interface TransporterDao {
 	public List<Query> getCustomerAllQueryList(int transporterId);
 
 	public void saveResponseOfTransporter(int queryId, String transporterResponce);
+
+	public Vehicle getVehicleById(int vehicleId);
 }

@@ -1,15 +1,14 @@
 package com.portal.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,14 +33,15 @@ public class LoginController {
 	private AdminService adminService;
 	
 
-	// ----------Show All Login Forms Link-----------------------------------------
+	// ----------Show All Login Forms Link---------------
 	
 	@RequestMapping("ShowLoginPage")
-	public String showLoginForm() {
-		return "LoginPage";
+	public ModelAndView showLoginForm() {
+		ModelAndView modelAndView = new ModelAndView("others/LoginPage");
+		return modelAndView;
 	}
 
-	// ----------Show Customer Login Page Link---------------------------------------
+	// ----------Show Customer Login Page Link-----------
 	
 	@RequestMapping("ShowCustomerLoginPage")
 	public ModelAndView showCustomerLoginPage() {
@@ -51,40 +51,41 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	// ----------Show Transporter Login Page Link---------------------------------------
+	// ----------Show Transporter Login Page Link------------
 	
 	@RequestMapping("ShowTransporterLoginPage")
 	public ModelAndView showTransporterLoginPage() {
-		ModelAndView modelAndView = new ModelAndView("TransporterLoginPage");
+		ModelAndView modelAndView = new ModelAndView("transporter/TransporterLoginPage");
 		Transporter transporterObj = new Transporter();
 		modelAndView.addObject("transporterObj", transporterObj);
 		return modelAndView;
 	}
 
-	// ---------Show Admin Login Page Link---------------------------------------
+	// ---------Show Admin Login Page Link-------------
 	@RequestMapping("ShowAdminLoginPage")
-	public String showAdminLoginPage() {
-		return "AdminLoginPage";
+	public ModelAndView showAdminLoginPage() {
+		ModelAndView modelAndView = new ModelAndView("admin/AdminLoginPage");
+		return modelAndView;
 	}
 
-	// --------Transporter Login Page Check---------------------------------------
+	// --------Transporter Login Page Check------------
 	
 	
 	@RequestMapping("loginTranspoterProcess")
 	public ModelAndView loginTranspoterProcess(@ModelAttribute("transporterObj") Transporter transporterObj) {
 		Transporter transporterObject = transpoterService.login(transporterObj);
 		if (transporterObject.getTransporterId()>0) {
-			ModelAndView modelAndView = new ModelAndView("HomeTransporter");
+			ModelAndView modelAndView = new ModelAndView("transporter/HomeTransporter");
 			modelAndView.addObject("TransporterID", transporterObject.getTransporterId());
 			return modelAndView;
 		} else {
-			ModelAndView modelAndView = new ModelAndView("TransporterLoginPage");
+			ModelAndView modelAndView = new ModelAndView("transporter/TransporterLoginPage");
 			modelAndView.addObject("transporterObj", transporterObj);
 			return modelAndView;
 		}
 	}
 
-	// --------Customer Login PageCheck---------------------------------------
+	// --------Customer Login PageCheck--------------
 
 	@RequestMapping("loginCustomerProcess")
 	public ModelAndView loginCustomerProcess(@ModelAttribute("customerObj") Customer customerObj) {
@@ -102,25 +103,32 @@ public class LoginController {
 		}
 	}
 
-	// ------Admin Login Page Check---------------------------------------
+	// ------Admin Login Page Check----------------------------
 	
 	@RequestMapping("loginAdminProcess")
 	public ModelAndView loginAdminProcess(@RequestParam String AdminUsername, @RequestParam String AdminPassword) {
 		if (adminService.checkAdminUsernamePassword(AdminUsername, AdminPassword)) {
-			ModelAndView modelAndView = new ModelAndView("HomeAdmin");
+			ModelAndView modelAndView = new ModelAndView("admin/HomeAdmin");
 			modelAndView.addObject("AdminUsername", AdminUsername);
 			return modelAndView;
 		} else {
-			ModelAndView modelAndView = new ModelAndView("AdminLoginPage");
+			ModelAndView modelAndView = new ModelAndView("admin/AdminLoginPage");
 			return modelAndView;
 		}
 	}
-	//-----------------Logout--------------------------------
+	//-----------------Logout----------------------------------
 	@RequestMapping(value="logout",method = RequestMethod.GET)
 	public String logout(HttpServletRequest request,SessionStatus session) {
 		session.setComplete();
 		request.getSession().invalidate();
 		return "redirect:/ShowLoginPage";
 	}
-
+	
+	//--------- Exception Handling--------------------
+	@ExceptionHandler(value = Exception.class)
+	public ModelAndView handleException(Exception e) {
+		System.out.println("Unkown Exception Occured: " + e);
+		ModelAndView modelAndView = new ModelAndView("others/LoginPage");
+		return modelAndView;
+	}
 }

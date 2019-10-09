@@ -5,9 +5,10 @@
 <body>
 	<form>
 		<div align="center">
-			<h1>Error</h1>
+			<h1>We Already Accepted Your Rating</h1>
+			<h1>Thank you !</h1>
 			<br/>
-			 <a href="HomeCustomer">Customer</a> <br />
+			 <a href="ShowAllDeals">All Deals</a> <br />
 		</div>
 	</form>
 

@@ -1,6 +1,5 @@
 package com.portal.entity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,9 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -27,16 +30,30 @@ public class Customer {
 	@GenericGenerator(name = "system-increment", strategy = "increment")
 	private int customerId;
 
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String customerName;
+	
+	@Pattern(regexp="(^$|[0-9]{10})")
 	private String customerMobileNumber;
+	
 	@Email
 	@Column(unique = true)
 	private String cutomerEmail;
+	
+	@Pattern(regexp="[0-9]+", message="Wrong zip!")
 	private String customerPincode;
+	
+	@Size(min=5, max=15, message="Your Username should be between 5 - 15 characters.")
 	@Column(unique = true)
 	private String customerUsername;
+	
+    //@Size(min=5, max=15, message="Password should be between 5 - 15 charactes")
 	private String customerPassword;
+	
 	private String customerGender;
+	
+	@NotBlank(message = "Please Enter a Address")
+    @Length(min=5, max=25, message="Address should be between 5 - 25 charactes")
 	private String customerAddress;
 
 	// @LazyCollection(LazyCollectionOption.FALSE)

@@ -6,12 +6,15 @@
 <title>Transporter Request</title>
 </head>
 <body>
-	<h1>List of Transporter Request</h1>
+	<form action="logout">
+<div><a href="HomeAdmin">Home</a></div>
+<div align="right"><button type="submit" value="submit">Logout</button></div>
 
-	<a href="logout">logout</a>
-	<a href='HomeAdmin'>Home</a>
+<div align="center">
+	<h2>...Admin...</h2>
+	<h3>Transporter Request</h3>
 	<br />
-
+</div></form>
 	<table border="1">
 		<tr>
 			<th>Transporter Username</th>

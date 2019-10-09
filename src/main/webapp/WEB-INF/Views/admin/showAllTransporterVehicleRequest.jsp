@@ -7,12 +7,18 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeAdmin'>Home</a>
-	<br />
-	<h1>List of Transporter Vehicle Request</h1>
+	<form action="logout">
+<div><a href="HomeAdmin">Home</a></div>
+<div align="right"><button type="submit" value="submit">Logout</button></div>
 
-	<table border="1">
+<div align="center">
+	<h2>...Admin...</h2>
+	<h3>Vehicle Request</h3>
+	<br />
+	</div>
+	</form>
+	
+	<table border="1" style="width:100%">
 		<tr>
 			<th>Vehicle Type</th>
 			<th>Vehicle Name</th>
@@ -50,7 +56,7 @@
 
 				<td><a
 					href="openFile?open=${vehicleListObjVar.vehicleDriverDrivingLicencePath}"
-					target=" ">Open Fitness Certificate</a></td>
+					target=" ">Open Driver Driving Licence</a></td>
 				<td>${vehicleListObjVar.vehicleApproval}</td>
 				<td><a href="${approveLink}">Approve</a> | <a
 					href="${deleteLink}">Reject</a></td>

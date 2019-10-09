@@ -10,10 +10,12 @@
 <form>
 <div align="right"><a href="index.jsp">Home</a></div>
 <div align="center">
-<h3>Logout</h3>
+<h3>Registration Page</h3>
 <br/>
-<a href = "ShowLoginPage">Login</a>
-
+<a href = "showNewCutomerForm">New Customer</a>
+<br/>
+<a href ="showNewTranspoterForm">New Transporter</a>
+<br/>
 
 </div>
 </form>

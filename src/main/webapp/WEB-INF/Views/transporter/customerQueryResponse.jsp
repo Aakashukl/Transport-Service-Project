@@ -7,11 +7,15 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeTransporter'>Home</a>
-	<br />
-	<h1>Query</h1>
-
+				<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+			<div align="left"><a href='HomeTransporter'>Home</a></div>
+	
+	</div>
+	</form>
+	<div align="center">
+	<h3>Query</h3>
 	<table border="1">
 		<tr>
 			<th>Customer ID</th>
@@ -46,5 +50,6 @@
 
 
 	</table>
+	</div>
 </body>
 </html>

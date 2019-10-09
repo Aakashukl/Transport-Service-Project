@@ -1,9 +1,5 @@
 <%@page isELIgnored="false"%>
 <%@taglib prefix="frm" uri="http://www.springframework.org/tags/form"%>
-<%
-	if (request.getSession().getAttribute("CustomerID") == null)
-		response.sendRedirect("LoginPage.jsp");
-%>
 
 <html>
 <head>
@@ -11,33 +7,40 @@
 <title>Update Profile</title>
 </head>
 <body>
-<a href="HomeCustomer">Home</a>
-<a href="logout">logout</a>
-<frm:form action="saveCustomerProcess" modelAttribute="customerObj">
+<form action="logout">
+<div align="right"><button type="submit" value="submit">Logout</button></div>
+<div align="left"><a href='HomeCustomer'>Home</a></div>
+</form>
+<frm:form action="updateCustomerProcess" modelAttribute="customerObj">
+		<div align="center">
+		<h2>Update Profile</h2>
 		<table border="1">
 			<frm:hidden path="customerId" />
 			
 			<tr>
 				<td>Username</td>
-				<td><frm:input path="customerUsername" required="true" /></td>
+				<td><frm:input path="customerUsername" required="true" /><frm:errors path="customerUsername"/>
+				</td>
 			</tr>
 			
 			
 			<tr>
 				<td>Password</td>
-				<td><frm:input path="customerPassword" type = "password" required="true" /></td>
+				<td><frm:input path="customerPassword" type = "password" required="true" /><frm:errors path="customerPassword"/>
+				</td>
 			</tr>
 			
 			
 			<tr>
 				<td>Full Name</td>
-				<td><frm:input path="customerName" /><%--  <frm:errors
-						path="customerName" /> --%></td>
+				<td><frm:input path="customerName" /><frm:errors path="customerName"/>
+				</td>
 			</tr>
 
 			<tr>
 				<td>Mobile Number</td>
-				<td><frm:input path="customerMobileNumber" type="number" /> <%-- <frm:errors path="customerMobileNumber" /> --%></td>
+				<td><frm:input path="customerMobileNumber" type="number" /><frm:errors path="customerMobileNumber"/>
+				</td>
 			</tr>
 
 			<tr>
@@ -53,11 +56,16 @@
 						value="Female" />Female</td>
 			</tr>
 
-
+			<tr>
+				<td>Pin Code</td>
+				<td><frm:input path="customerPincode" type="number" /><frm:errors path="customerPincode"/>
+				</td>
+			</tr>
 
 			<tr>
 				<td>Address</td>
-				<td><frm:input path="customerAddress" required="true" /></td>
+				<td><frm:input path="customerAddress" required="true" /><frm:errors path="customerAddress"/>
+				</td>
 			</tr>
 
 
@@ -69,7 +77,9 @@
 
 
 
+
 		</table>
+		</div>
 	</frm:form>
 </body>
 </html>

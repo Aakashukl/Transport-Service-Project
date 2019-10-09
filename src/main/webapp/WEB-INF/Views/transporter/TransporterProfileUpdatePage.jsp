@@ -6,23 +6,29 @@
 <head>
 </head>
 <body>
-	<div align="right"><a href="index.jsp">Home</a></div>
-	<frm:form action="saveTranspoterProcess"
+	<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+			<div align="left"><a href='HomeTransporter'>Home</a></div>
+	
+	</div>
+	</form>
+	<frm:form action="updateTranspoterProcess"
 		modelAttribute="transporterObj" enctype="multipart/form-data" method="POST">
 		<div align="center">
-		<h3>Transporter-Entry-Form</h3>
+		<h3>Profile Update</h3>
 		<table border="1">
 			<frm:hidden path="transporterId" />
 
 			<tr>
 				<td>Username</td>
-				<td><frm:input path="transporterUsername" required="true" /></td>
+				<td><frm:input path="transporterUsername" /></td>
 			</tr>
 
 
 			<tr>
 				<td>Password</td>
-				<td><frm:input path="transporterPassword" required="true" /></td>
+				<td><frm:input path="transporterPassword"/></td>
 			</tr>
 
 
@@ -42,7 +48,7 @@
 
 			<tr>
 				<td>Mobile Number</td>
-				<td><frm:input path="transporterMobile" type="number" /></td>
+				<td><frm:input path="transporterMobile" /> <%-- <frm:errors path="transporterMobile" /> --%></td>
 			</tr>
 
 			<tr>
@@ -53,13 +59,13 @@
 
 			<tr>
 				<td>PAN Card Upload</td>
-				<td><input name="PANPath" type="file" required /></td>
+				<td><input name="PANPath" type="file"  /></td>
 			</tr>
 			
 
 			<tr>
 				<td>GST Number</td>
-				<td><frm:input path="transporterGSTNo" required="true" /></td>
+				<td><frm:input path="transporterGSTNo"  /></td>
 			</tr>
 
 

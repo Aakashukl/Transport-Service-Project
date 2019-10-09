@@ -7,11 +7,18 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeTransporter'>Home</a>
-	<br />
-	<h3>Update-Deal-Form</h3>
+		<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+			<div align="left"><a href='HomeTransporter'>Home</a></div>
+	
+	</div>
+	</form>
+	
 	<frm:form action="savePostedDeal" modelAttribute="dealsObj">
+	<div align="center">
+	<h3>Update-Deal-Form</h3>
+	<br/>
 		<table border="1" style="width:50%" >
 			<frm:hidden path="dealId" />
 
@@ -95,6 +102,7 @@
 
 
 		</table>
+		</div>
 	</frm:form>
 
 </body>

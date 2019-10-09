@@ -44,7 +44,7 @@ public class TransporterDaoImpl implements TransporterDao {
 	public void saveVehicleObj(Vehicle vehicleObj) {
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(vehicleObj);
+		session.saveOrUpdate(vehicleObj);
 		transaction.commit();
 		session.close();
 		
@@ -134,6 +134,13 @@ public class TransporterDaoImpl implements TransporterDao {
 		session.update(queryObj);
 		transaction.commit();
 		session.close();
+	}
+
+	public Vehicle getVehicleById(int vehicleId) {
+		session =sessionFactory.openSession();
+		Vehicle vehicleObj = session.get(Vehicle.class,vehicleId);
+		session.close();
+		return vehicleObj;
 	}
 
 

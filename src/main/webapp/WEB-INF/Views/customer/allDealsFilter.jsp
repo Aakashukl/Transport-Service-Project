@@ -7,16 +7,22 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeCustomer'>Home</a>
+	<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+		</div>
+		<div align="left">
+			<a href='HomeCustomer'>Home</a>
+		</div>
+	</form>
 	<br />
-	<h1>List of Transporter Vehicle Request</h1>
+	<h1>Deals</h1>
 
 	<form action="dealsFilter">
 		<select name="filter">
-			<option value="dealsFilterCity">dealsFilterCity</option>
-			<option value="dealsFilterDate">dealsFilterDate</option>
-			<option value="alldealsFilter">alldealsFilter</option>
+			<option value="dealsFilterCity">City Filter</option>
+			<option value="dealsFilterDate">Date Filter</option>
+			<option value="alldealsFilter">By Date And City</option>
 		</select> <input type="submit" value="Submit">
 	</form>
 

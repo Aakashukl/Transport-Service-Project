@@ -7,10 +7,16 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeTransporter'>Home</a>
+		<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+			<div align="left"><a href='HomeTransporter'>Home</a></div>
+	
+	</div>
+	</form>
 	<br />
-	<h1>List of Transporter Vehicle Request</h1>
+	<div align="center">
+	<h3>Transporter Deal Update</h3>
 
 	<table border="1">
 		<tr>
@@ -57,5 +63,6 @@
 		</c:forEach>
 
 	</table>
+	 </div>
 </body>
 </html>

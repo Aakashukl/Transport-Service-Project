@@ -7,16 +7,22 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeCustomer'>Home</a>
+	<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+		</div>
+		<div align="left">
+			<a href='HomeCustomer'>Home</a>
+		</div>
+	</form>
 	<br />
-	<h1>List of Transporter Vehicle Request</h1>
+	<h1>Deals</h1>
 
 	<form action="dealsFilter">
 		<select name="filter">
-			<option value="dealsFilterCity">dealsFilterDate</option>
-			<option value="dealsFilterDate">dealsFilterDate</option>
-			<option value="alldealsFilter">alldealsFilter</option>
+			<option value="dealsFilterCity">City Filter</option>
+			<option value="dealsFilterDate">Date Filter</option>
+			<option value="alldealsFilter">By Date And City</option>
 		</select> <input type="submit" value="Submit">
 	</form>
 
@@ -52,24 +58,23 @@
 		<c:forEach items="${dealsListObj}" var="alldealObjVar">
 
 
-			<c:url var="BookDealAndGRate" value="BookDeal">
-				<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
-			</c:url>
-			<c:url var="query" value="customerQueryPage">
-				<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
-			</c:url>
-			<tr>
-				<td>${alldealObjVar.startPointCityName}</td>
-				<td>${alldealObjVar.endPointCityName}</td>
-				<td>${alldealObjVar.startPointDate}</td>
-				<td>${alldealObjVar.endPointDate}</td>
-				<td>${alldealObjVar.startPointTime}</td>
-				<td>${alldealObjVar.endPointTime}</td>
-				<td>${alldealObjVar.dealPrice}</td>
-				<td><a href="${query}">Ask</a></td>
-				<td><a href="${BookDealAndGRate}">Book</a></td>
-			</tr>
-
+				<c:url var="BookDealAndGRate" value="BookDeal">
+					<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
+				</c:url>
+				<c:url var="query" value="customerQueryPage">
+					<c:param name="dealId" value="${alldealObjVar.dealId}"></c:param>
+				</c:url>
+				<tr>
+					<td>${alldealObjVar.startPointCityName}</td>
+					<td>${alldealObjVar.endPointCityName}</td>
+					<td>${alldealObjVar.startPointDate}</td>
+					<td>${alldealObjVar.endPointDate}</td>
+					<td>${alldealObjVar.startPointTime}</td>
+					<td>${alldealObjVar.endPointTime}</td>
+					<td>${alldealObjVar.dealPrice}</td>
+					<td><a href="${query}">Ask</a></td>
+					<td><a href="${BookDealAndGRate}">Book</a></td>
+				</tr>
 		</c:forEach>
 
 	</table>

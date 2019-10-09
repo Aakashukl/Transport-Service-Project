@@ -6,6 +6,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+		</div>
+		<div align="left">
+			<a href='HomeCustomer'>Home</a>
+		</div>
+	</form>
+	<br />
+
 	<h1>Rate Transporter Deal</h1>
 	<frm:form action="saveReviewGivenByCustomer" modelAttribute="dealObj">
 		<table border="1">

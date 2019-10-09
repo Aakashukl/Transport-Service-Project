@@ -6,10 +6,14 @@
 <title>Transporter Request</title>
 </head>
 <body>
-	<h1>List of All Transporter</h1>
 
-	<a href="logout">logout</a>
-	<a href='HomeAdmin'>Home</a>
+<form action="logout">
+<div><a href="HomeAdmin">Home</a></div>
+<div align="right"><button type="submit" value="submit">Logout</button></div>
+
+<div align="center">
+	<h2>...Admin...</h2>
+	<h3>List of All Transporter</h3>
 	<br />
 
 	<table border="1">
@@ -55,5 +59,7 @@
 		</c:forEach>
 
 	</table>
+	</div>
+	</form>
 </body>
 </html>

@@ -1,11 +1,20 @@
 <html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
 <body>
-<h2>Hello World!</h2>
-
-<a href = "showNewCutomerForm">New Customer</a>
+<form action="logout">
+<div align="center">
+<h3>Home</h3>
 <br/>
-<a href ="showNewTranspoterForm">Transporter</a>
+<a href = "showRegistrationPage">Registration</a>
 <br/>
 <a href ="ShowLoginPage">Login</a>
+<br/>
+
+</div>
+</form>
+
 </body>
 </html>

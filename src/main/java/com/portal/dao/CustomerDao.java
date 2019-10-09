@@ -33,4 +33,6 @@ public interface CustomerDao {
 	public List<Deals> getAllDealsObj(Date fromDate);
 	
 	public List<Deals> getAllDealsObj(String fromCity);
+
+	public List<String> getAllCustomerEmail();
 }

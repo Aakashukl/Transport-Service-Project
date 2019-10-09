@@ -41,18 +41,8 @@ public class TranspoterServiceImpl implements TranspoterService{
 		mailSender.send(mailMessage);
 	}
 	
-	public static String hashPasswordConverter(String passwordPlainText) {
-		String salt = BCrypt.gensalt(5); 
-		String hashPassword = BCrypt.hashpw(passwordPlainText, salt);
-		return hashPassword;
-	}
-	
-	public static Boolean hashPasswordCheck(String loggerPassword, String passwordFromDatabase) {
- 
-		boolean hashPassword = BCrypt.checkpw(loggerPassword, passwordFromDatabase);
-		return hashPassword;
-	}
-	
+
+	//---------------------------Save New Transporter -------------------------
 	public void saveTranspoterObj(Transporter transporterObj, MultipartFile panCard) throws Exception {
 		
 		FileOutputStream fos;
@@ -75,6 +65,21 @@ public class TranspoterServiceImpl implements TranspoterService{
 		}
 		
 		
+	}
+	
+	
+	
+	//-------------------Hash Password--------------------
+	public static String hashPasswordConverter(String passwordPlainText) {
+		String salt = BCrypt.gensalt(5); 
+		String hashPassword = BCrypt.hashpw(passwordPlainText, salt);
+		return hashPassword;
+	}
+	
+	public static Boolean hashPasswordCheck(String loggerPassword, String passwordFromDatabase) {
+ 
+		boolean hashPassword = BCrypt.checkpw(loggerPassword, passwordFromDatabase);
+		return hashPassword;
 	}
 
 	//----------- Get Transporter all Data ----------------------
@@ -196,7 +201,7 @@ public class TranspoterServiceImpl implements TranspoterService{
 	}
 	
 	
-
+	//----------------------Open File---------------------------------------
 	public void openFile(String openFile, HttpServletResponse response)throws Exception {
 		File file = new File(openFile);
 		FileInputStream fis = new FileInputStream(file);
@@ -224,6 +229,18 @@ public class TranspoterServiceImpl implements TranspoterService{
 	public void saveResponseOfTransporter(int queryId, String transporterResponce) {
 		transporterDao.saveResponseOfTransporter(queryId,transporterResponce);
 		
+	}
+
+	//------------------getVehicleListByTransporterId--------------------
+	public List<Vehicle> getVehicleListByTransporterId(int transporterID) {
+		List<Vehicle> vehicleList = getTransporterObjByID(transporterID) .getVehicle();
+		return vehicleList;
+	}
+
+	// ------------------get Vehicle List By Id-----------------
+	public Vehicle getVehicleById(int vehicleId) {
+		Vehicle vehicleObj = transporterDao.getVehicleById(vehicleId);
+		return vehicleObj;
 	}
 
 	

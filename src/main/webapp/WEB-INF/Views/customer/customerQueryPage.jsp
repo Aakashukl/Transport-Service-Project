@@ -7,9 +7,16 @@
 </head>
 <body>
 
-	<a href="logout">logout</a>
-	<a href='HomeCustomer'>Home</a>
+	<form action="logout">
+		<div align="right">
+			<button type="submit" value="submit">Logout</button>
+		</div>
+		<div align="left">
+			<a href='HomeCustomer'>Home</a>
+		</div>
+	</form>
 	<br />
+
 	<h1>Query</h1>
 
 	<table border="1">

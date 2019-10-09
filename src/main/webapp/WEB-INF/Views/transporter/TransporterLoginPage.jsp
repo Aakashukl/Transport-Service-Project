@@ -4,29 +4,28 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Customer Login Page</title>
+<title>Transporter Login Page</title>
 </head>
 <body>
-
-	<frm:form action="loginCustomerProcess" modelAttribute="customerObj"
-		method="POST">
+	<frm:form action="loginTranspoterProcess"
+		modelAttribute="transporterObj" method="POST">
 		<div align="right">
 			<a href="index.jsp">Home</a>
 		</div>
 
 		<div align="center">
-			<h3>Customer Login</h3>
+			<h3>Transport Login</h3>
 			<table border="1">
 
 				<tr>
 					<td>Username</td>
-					<td><frm:input path="customerUsername" required="true" /></td>
+					<td><frm:input path="transporterUsername" required="true" /></td>
 				</tr>
 
 
 				<tr>
 					<td>Password</td>
-					<td><frm:input path="customerPassword" type="password"
+					<td><frm:input path="transporterPassword" type="password"
 							required="true" /></td>
 				</tr>
 
@@ -40,6 +39,5 @@
 			</table>
 		</div>
 	</frm:form>
-
 </body>
 </html>
