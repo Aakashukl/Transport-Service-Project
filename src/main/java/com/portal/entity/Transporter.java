@@ -8,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 public class Transporter {
@@ -21,17 +24,32 @@ public class Transporter {
 	@GenericGenerator(name = "system-increment", strategy = "increment")
 	private int transporterId;
 	@Column(unique = true)
+	
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String transporterUsername;
+	
 	private String transporterPassword;
+	
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String transportName;
+	
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String transporterName;
+	
+	@Pattern(regexp="(^$|[0-9]{10})")
 	private String transporterMobile;
+	
+	@Email
 	@Column(unique = true)
 	private String transporterEmail;
+	
 	private String transporterPANPath;
+	
 	private String transporterValidation;
+	
 	@Column(unique = true)
 	private String transporterGSTNo;
+	
 	private int transporterRating;
 	
 	@OneToMany(mappedBy = "transporter", orphanRemoval = true, cascade = CascadeType.PERSIST)

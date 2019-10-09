@@ -286,12 +286,18 @@ public class CustomerController {
 	// ---------------update Customer Process-----------------------
 
 	@RequestMapping("updateCustomerProcess")
-	public ModelAndView updateCustomerProcess(@ModelAttribute("customerObj") Customer customer) {
+	public ModelAndView updateCustomerProcess(@Valid @ModelAttribute("customerObj") Customer customer,
+			BindingResult result) {
 		try {
-			customerService.saveCustomerObj(customer);
-			ModelAndView modelAndView = new ModelAndView("customer/HomeCustomer");
-			// modelAndView.addObject("customerObj", customer);
-			return modelAndView;
+			if (result.hasErrors()) {
+				ModelAndView mv = new ModelAndView("customer/CustomerEntry");
+				return mv;
+			} else {
+				customerService.saveCustomerObj(customer);
+				ModelAndView modelAndView = new ModelAndView("customer/HomeCustomer");
+				// modelAndView.addObject("customerObj", customer);
+				return modelAndView;
+			}
 		} catch (javax.persistence.PersistenceException e) {
 			System.out.println(e);
 			ModelAndView modelAndView = new ModelAndView("others/customerUniqueValueException");

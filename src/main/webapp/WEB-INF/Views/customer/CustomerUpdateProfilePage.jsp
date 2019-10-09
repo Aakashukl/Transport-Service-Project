@@ -19,14 +19,14 @@
 			
 			<tr>
 				<td>Username</td>
-				<td><frm:input path="customerUsername" required="true" /><frm:errors path="customerUsername"/>
+				<td><frm:input path="customerUsername"  /><frm:errors path="customerUsername"/>
 				</td>
 			</tr>
 			
 			
 			<tr>
 				<td>Password</td>
-				<td><frm:input path="customerPassword" type = "password" required="true" /><frm:errors path="customerPassword"/>
+				<td><frm:input path="customerPassword" type = "password"  /><frm:errors path="customerPassword"/>
 				</td>
 			</tr>
 			
@@ -64,7 +64,7 @@
 
 			<tr>
 				<td>Address</td>
-				<td><frm:input path="customerAddress" required="true" /><frm:errors path="customerAddress"/>
+				<td><frm:input path="customerAddress"  /><frm:errors path="customerAddress"/>
 				</td>
 			</tr>
 
