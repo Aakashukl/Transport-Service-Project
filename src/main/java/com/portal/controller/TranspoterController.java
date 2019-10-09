@@ -1,11 +1,14 @@
 package com.portal.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.portal.entity.Query;
 import com.portal.entity.Transporter;
-import com.portal.entity.Vehicle;
 import com.portal.service.CustomerService;
 import com.portal.service.TranspoterService;
 
@@ -90,7 +92,7 @@ public class TranspoterController {
 		// System.out.println(transporter.getTransporterId());
 
 		transportService.saveTranspoterObj(transporter, PanCard);
-		ModelAndView modelAndView = new ModelAndView("TranspoterEntry");
+		ModelAndView modelAndView = new ModelAndView("others/LoginPage");
 		Transporter transporter2 = new Transporter();
 		modelAndView.addObject("transporterObj", transporter2);
 		return modelAndView;
@@ -130,6 +132,39 @@ public class TranspoterController {
 			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
 			return modelAndView;
 		}
+	}
+
+	// ---------------Index Out Of Bounds Exception--------------------
+	@ExceptionHandler(java.lang.IndexOutOfBoundsException.class)
+	public ModelAndView indexOutOfBoundsException(java.lang.IndexOutOfBoundsException ex) {
+		System.out.println(" parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------IOException Exception--------------------
+	@ExceptionHandler(IOException.class)
+	public ModelAndView iOException(IOException ex) {
+		System.out.println(" parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------javax.validation.ConstraintViolationException--------------------
+	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
+	public ModelAndView constraintViolationException(javax.validation.ConstraintViolationException ex) {
+		System.out.println(ex);
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------Missing Servlet Request Parameter Exception-----
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
+		String name = ex.getParameterName();
+		System.out.println(name + " parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
 	}
 
 }

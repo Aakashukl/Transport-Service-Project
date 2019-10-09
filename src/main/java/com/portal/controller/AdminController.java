@@ -1,6 +1,7 @@
 package com.portal.controller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -189,6 +192,24 @@ public class AdminController {
 	@RequestMapping("showRegistrationPage")
 	public String showRegistrationPage() {
 		return "others/RegistrationPage";
+	}
+	
+	// ---------------IOException Exception-----
+	@ExceptionHandler(IOException.class)
+	public ModelAndView iOException(IOException ex) {
+		System.out.println(" parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+	
+
+	// ---------------Missing Servlet Request Parameter Exception-----IOException e
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
+		String name = ex.getParameterName();
+		System.out.println(name + " parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
 	}
 
 }

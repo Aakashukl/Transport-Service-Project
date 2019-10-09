@@ -46,7 +46,7 @@
 		<p>1 is good, 10 is bad (i.e., "How much pain are you in right
 			now?")</p>
 		<frm:hidden path="dealId" value="${dealObj.dealId}" />	
-		<input name="ratingValue" type="number" />
+		<input name="ratingValue" type="number"  min="1" max="10" />
 		<input type="submit" value="submit"/>
 
 

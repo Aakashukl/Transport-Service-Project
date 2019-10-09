@@ -147,7 +147,10 @@ public class TranspoterServiceImpl implements TranspoterService{
 			e.printStackTrace();
 		}
 	}
-
+//------------------Update Vehicle----------------------------------------------------------
+	
+	
+	
 	public List<Transporter> getListOfALLTransporter() {
 		return transporterDao.getListOfALLTransporter();
 	}
@@ -242,6 +245,7 @@ public class TranspoterServiceImpl implements TranspoterService{
 		Vehicle vehicleObj = transporterDao.getVehicleById(vehicleId);
 		return vehicleObj;
 	}
+
 
 	
 

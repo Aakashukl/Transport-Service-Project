@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -321,6 +322,23 @@ public class CustomerController {
 
 		}
 
+	}
+
+	// ---------------Index Out Of Bounds Exception--------------------
+	@ExceptionHandler(java.lang.IndexOutOfBoundsException.class)
+	public ModelAndView indexOutOfBoundsException(java.lang.IndexOutOfBoundsException ex) {
+		System.out.println(" parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------Missing Servlet Request Parameter Exception-----
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
+		String name = ex.getParameterName();
+		System.out.println(name + " parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
 	}
 
 //-----------------------Handling Exception-----------------------

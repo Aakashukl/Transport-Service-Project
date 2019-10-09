@@ -26,39 +26,39 @@
 				<tr>
 					<td>Username</td>
 					<td><frm:input path="transporterUsername" />
-						<frm:errors path="transporterUsername" /></td>
+						<%-- <frm:errors path="transporterUsername" /> --%></td>
 				</tr>
 
 
 				<tr>
 					<td>Password</td>
-					<td><frm:input path="transporterPassword" /> <frm:errors
-							path="transporterPassword" /></td>
+					<td><frm:input path="transporterPassword" /> <%-- <frm:errors
+							path="transporterPassword" /> --%></td>
 				</tr>
 
 
 				<tr>
 					<td>Transport Name</td>
-					<td><frm:input path="transportName" /> <frm:errors
-							path="transporterName" /></td>
+					<td><frm:input path="transportName" /> <%-- <frm:errors
+							path="transporterName" /> --%></td>
 				</tr>
 
 				<tr>
 					<td>Transporter Name</td>
-					<td><frm:input path="transporterName" />  <frm:errors
-						path="transportererName" /></td>
+					<td><frm:input path="transporterName" /> <%--  <frm:errors
+						path="transportererName" /> --%></td>
 				</tr>
 
 				<tr>
 					<td>Mobile Number</td>
-					<td><frm:input path="transporterMobile" /> <frm:errors
-							path="transporterMobile" /></td>
+					<td><frm:input path="transporterMobile" /> <%-- <frm:errors
+							path="transporterMobile" /> --%></td>
 				</tr>
 
 				<tr>
 					<td>Email</td>
-					<td><frm:input path="transporterEmail" /> <frm:errors
-							path="transporterEmail" /></td>
+					<td><frm:input path="transporterEmail" /> <%-- <frm:errors
+							path="transporterEmail" /> --%></td>
 				</tr>
 
 				<tr>
@@ -69,7 +69,7 @@
 
 				<tr>
 					<td>GST Number</td>
-					<td><frm:input path="transporterGSTNo" /> <frm:errors path="transporterGSTNo" /></td>
+					<td><frm:input path="transporterGSTNo" /> <%-- <frm:errors path="transporterGSTNo" /> --%></td>
 				</tr>
 
 

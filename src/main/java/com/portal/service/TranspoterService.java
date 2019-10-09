@@ -50,7 +50,7 @@ public interface TranspoterService {
 	public List<Vehicle> getVehicleListByTransporterId(int transporterID);
 
 	public Vehicle getVehicleById(int vehicleId);
-
 	
+
 	
 }

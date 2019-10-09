@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ import com.portal.service.CustomerService;
 import com.portal.service.TranspoterService;
 
 @Controller
-@SessionAttributes({"CustomerID","TransporterID","AdminUsername"})
+@SessionAttributes({ "CustomerID", "TransporterID", "AdminUsername" })
 public class LoginController {
 
 	@Autowired
@@ -28,13 +29,12 @@ public class LoginController {
 
 	@Autowired
 	private TranspoterService transpoterService;
-	
+
 	@Autowired
 	private AdminService adminService;
-	
 
 	// ----------Show All Login Forms Link---------------
-	
+
 	@RequestMapping("ShowLoginPage")
 	public ModelAndView showLoginForm() {
 		ModelAndView modelAndView = new ModelAndView("others/LoginPage");
@@ -42,7 +42,7 @@ public class LoginController {
 	}
 
 	// ----------Show Customer Login Page Link-----------
-	
+
 	@RequestMapping("ShowCustomerLoginPage")
 	public ModelAndView showCustomerLoginPage() {
 		ModelAndView modelAndView = new ModelAndView("customer/CustomerLoginPage");
@@ -52,7 +52,7 @@ public class LoginController {
 	}
 
 	// ----------Show Transporter Login Page Link------------
-	
+
 	@RequestMapping("ShowTransporterLoginPage")
 	public ModelAndView showTransporterLoginPage() {
 		ModelAndView modelAndView = new ModelAndView("transporter/TransporterLoginPage");
@@ -69,12 +69,11 @@ public class LoginController {
 	}
 
 	// --------Transporter Login Page Check------------
-	
-	
+
 	@RequestMapping("loginTranspoterProcess")
 	public ModelAndView loginTranspoterProcess(@ModelAttribute("transporterObj") Transporter transporterObj) {
 		Transporter transporterObject = transpoterService.login(transporterObj);
-		if (transporterObject.getTransporterId()>0) {
+		if (transporterObject.getTransporterId() > 0) {
 			ModelAndView modelAndView = new ModelAndView("transporter/HomeTransporter");
 			modelAndView.addObject("TransporterID", transporterObject.getTransporterId());
 			return modelAndView;
@@ -89,11 +88,12 @@ public class LoginController {
 
 	@RequestMapping("loginCustomerProcess")
 	public ModelAndView loginCustomerProcess(@ModelAttribute("customerObj") Customer customerObj) {
-	//public ModelAndView loginCustomerProcess(@RequestParam String username, @RequestParam String password) {
-		
-		//if (customerService.login(username, password)) {
+		// public ModelAndView loginCustomerProcess(@RequestParam String username,
+		// @RequestParam String password) {
+
+		// if (customerService.login(username, password)) {
 		Customer customerObject = customerService.login(customerObj);
-		if (customerObject.getCustomerId()>0) {
+		if (customerObject.getCustomerId() > 0) {
 			ModelAndView modelAndView = new ModelAndView("customer/HomeCustomer");
 			modelAndView.addObject("CustomerID", customerObject.getCustomerId());
 			return modelAndView;
@@ -104,7 +104,7 @@ public class LoginController {
 	}
 
 	// ------Admin Login Page Check----------------------------
-	
+
 	@RequestMapping("loginAdminProcess")
 	public ModelAndView loginAdminProcess(@RequestParam String AdminUsername, @RequestParam String AdminPassword) {
 		if (adminService.checkAdminUsernamePassword(AdminUsername, AdminPassword)) {
@@ -116,15 +116,25 @@ public class LoginController {
 			return modelAndView;
 		}
 	}
-	//-----------------Logout----------------------------------
-	@RequestMapping(value="logout",method = RequestMethod.GET)
-	public String logout(HttpServletRequest request,SessionStatus session) {
+
+	// -----------------Logout----------------------------------
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, SessionStatus session) {
 		session.setComplete();
 		request.getSession().invalidate();
 		return "redirect:/ShowLoginPage";
 	}
-	
-	//--------- Exception Handling--------------------
+
+	// ---------------Missing Servlet Request Parameter Exception-----
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
+		String name = ex.getParameterName();
+		System.out.println(name + " parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// --------- Exception Handling--------------------
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView handleException(Exception e) {
 		System.out.println("Unkown Exception Occured: " + e);

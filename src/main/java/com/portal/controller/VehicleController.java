@@ -1,11 +1,14 @@
 package com.portal.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -117,5 +120,38 @@ public class VehicleController {
 			ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
 			return modelAndView;
 		}
+	}
+
+	// ---------------Index Out Of Bounds Exception--------------------
+	@ExceptionHandler(java.lang.IndexOutOfBoundsException.class)
+	public ModelAndView indexOutOfBoundsException(java.lang.IndexOutOfBoundsException ex) {
+		System.out.println(" parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------IOException Exception-----
+	@ExceptionHandler(IOException.class)
+	public ModelAndView iOException(IOException ex) {
+		System.out.println(" parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------Missing Servlet Request Parameter Exception-----
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
+		String name = ex.getParameterName();
+		System.out.println(name + " parameter is missing");
+		ModelAndView modelAndView = new ModelAndView("others/LogoutPage");
+		return modelAndView;
+	}
+
+	// ---------------javax.validation.ConstraintViolationException--------------------
+	@ExceptionHandler(javax.validation.ConstraintViolationException.class)
+	public ModelAndView constraintViolationException(javax.validation.ConstraintViolationException ex) {
+		System.out.println(ex);
+		ModelAndView modelAndView = new ModelAndView("others/transporterUniqueValueException");
+		return modelAndView;
 	}
 }

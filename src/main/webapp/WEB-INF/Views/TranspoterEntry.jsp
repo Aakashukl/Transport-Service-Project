@@ -57,7 +57,7 @@
 
 				<tr>
 					<td>PAN Card Upload</td>
-					<td><input name="PANPath" type="file" required /></td>
+					<td><input name="PANPath" accept="application/pdf" type="file" required /></td>
 				</tr>
 
 
