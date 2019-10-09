@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +55,8 @@ public class TransporterDaoImpl implements TransporterDao {
 	public List<Transporter> getListOfALLTransporter() {
 		session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Transporter.class);
+		Criterion check = Restrictions.eq("transporterValidation", "0");
+		criteria.add(check);
 		List<Transporter> allTransporterListObj = criteria.list();
 		session.close();
 		return allTransporterListObj;
@@ -61,6 +65,8 @@ public class TransporterDaoImpl implements TransporterDao {
 	public List<Vehicle> getListOfALLVehicle() {
 		session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(Vehicle.class);
+		Criterion check = Restrictions.eq("vehicleApproval", "0");
+		criteria.add(check);
 		List<Vehicle> allVehicleListObj = criteria.list();
 		session.close();
 		return allVehicleListObj;

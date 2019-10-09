@@ -25,21 +25,21 @@ public class Transporter {
 	private int transporterId;
 	@Column(unique = true)
 	
-	//@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String transporterUsername;
 	
 	private String transporterPassword;
 	
-	//@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String transportName;
 	
-	//@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
+	@Size(min=5, max=25, message="Your name should be between 5 - 25 characters.")
 	private String transporterName;
 	
-	//@Pattern(regexp="(^$|[0-9]{10})")
+	@Pattern(regexp="(^$|[0-9]{10})")
 	private String transporterMobile;
 	
-	//@Email
+	@Email
 	@Column(unique = true)
 	private String transporterEmail;
 	

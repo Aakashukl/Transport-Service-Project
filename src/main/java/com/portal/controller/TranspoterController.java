@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -88,8 +90,11 @@ public class TranspoterController {
 	// ----------------Save Transport Process-------------------
 	@RequestMapping(value = "saveTranspoterProcess", method = RequestMethod.POST)
 	public ModelAndView saveTransportProcess(@RequestParam("PANPath") MultipartFile PanCard,
-			@ModelAttribute("transporterObj") Transporter transporter) throws Exception {
-		// System.out.println(transporter.getTransporterId());
+			@Valid @ModelAttribute("transporterObj") Transporter transporter, BindingResult result) throws Exception {
+		if(result.hasErrors()) {
+			ModelAndView mv = new ModelAndView("TranspoterEntry");
+			return mv;
+		}
 
 		transportService.saveTranspoterObj(transporter, PanCard);
 		ModelAndView modelAndView = new ModelAndView("others/LoginPage");
